@@ -23,7 +23,7 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
-
+ 
 .App-link {
   color: #61dafb;
 }
@@ -35,4 +35,9 @@
   to {
     transform: rotate(360deg);
   }
+}
+.background {
+  background: url("../public/david-watkis-ttMBIEnFeKA-unsplash.jpg");
+  max-width: 100vw;
+  min-height: 100vh;
 }
