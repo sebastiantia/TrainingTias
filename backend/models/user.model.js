@@ -13,6 +13,12 @@ const userSchema = new Schema({
     trim: true, //trims white spaces off the end
     minlength: 3, //at least three characters long
   },
+  password: {
+    type: String,
+    required: true,
+    trim: true,
+    minlength: 3
+  }
 },
 {
   timestamps: true, //automatically creates fields for when it was created and mdified.

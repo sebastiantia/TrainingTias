@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
+import {Modal} from './Modal.js';
 
 
 import './create-exercise.component.css'
@@ -18,15 +19,22 @@ class CreateExercises extends Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
     this.onChangeDate = this.onChangeDate.bind(this);
+    this.onChangePassword = this.onChangePassword.bind(this);
+  
+    this.showModal = this.showModal.bind(this);
+    this.hideModal = this.hideModal.bind(this);
 
     this.state = {
       //state is how you create variables in react, you are never gonna do: let name = 'beau':
       //In React you are always going to create everything in STATE so that React will auto update with new values.
       username: "",
+      password: "",
+      error:"",
       description: "",
       duration: 0,
       date: new Date(),
       users: [],
+      show: false,
     }; //now we need to add methods to update the state properties...
   }
 
@@ -47,12 +55,27 @@ class CreateExercises extends Component {
 
   }
 
+  showModal() {
+    this.setState({ show: true });
+  };
+
+  hideModal() {
+    this.setState({ show: false });
+  };
+
+
   onChangeUsername(e) {
     this.setState({
       username: e.target.value, //the target is the text-box, and .value is the value of the textbox
       //this sets username to value in the textbox 'target'
       //it's not going to replace state with just this, it just updates username element within the state.
     });
+  }
+
+  onChangePassword(e){
+    this.setState({
+      password: e.target.value,
+    })
   }
 
   onChangeDescription(e) {
@@ -74,9 +97,15 @@ class CreateExercises extends Component {
   //handling the submit button
 
   async onSubmit(e) {
+
     e.preventDefault(); //this will prevent the default HTML form submit behavior
+    
+    this.showModal();
+
     const exercise = {
       username: this.state.username,
+      error: this.state.error,
+      password: this.state.password,
       description: this.state.description,
       duration: this.state.duration,
       date: this.state.date,
@@ -89,9 +118,17 @@ class CreateExercises extends Component {
         exercise
       );
       console.log(post.data);
+      this.setState({
+        error: post.data
+    }) 
     } catch (e) {
       console.log(e);
     }
+
+
+
+    
+
     // <Navigate to="/"/>
     //after exercise has been submitted
     // window.location = "/"; // this is how you return the user to a specific page
@@ -99,15 +136,24 @@ class CreateExercises extends Component {
 
   render() {
     return (
+
+    
       <div>
+        <Modal show={this.state.show} handleClose={this.hideModal}>
+        <p>{this.state.error}</p>
+      </Modal>
         <container className="container">
+        
         <div className="card">
+
           <div id="outerDivWrapper">
             <div id="outerDiv">
               <div id="scrollableContent">
         
         <h3 style={{marginBottom:"1em"}}><b>Create New Exercise Log</b></h3>
-        <form onSubmit={this.onSubmit}>
+        
+        <form onSubmit={this.onSubmit} >
+        
           {/* when you submit you call this.onSubmit */}
           <div className="form-group">
             <label>Username:</label>
@@ -132,6 +178,16 @@ class CreateExercises extends Component {
               ))}
             </select>
           </div>
+          <div className="form-group">
+            <label>Password:</label>
+            <input 
+            type="text"
+            required
+            className="form-control"
+            value={this.state.password}
+            onChange={this.onChangePassword}
+            /> 
+          </div>
           
           <div className="form-group">
             <div className="form-group">
@@ -151,21 +207,24 @@ class CreateExercises extends Component {
               onChange={this.onChangeDuration}
             />
           </div>
-          <div>
-            <label>Date: </label>
+          <div marginBottom={4}>
+            <label >Date: </label>
             <div>
               <DatePicker //DatePicker conponent is going to pop up a calendar where you can select an actual date
                 selected={this.state.date}
                 onChange={this.onChangeDate}
+                display={"flex"}
               />
             </div>
           </div>
-          <div className="form-group">
+          <div className="form-group"  >
             <input
               type="submit"
               value="Create Exercise Log"
               className="btn btn-primary"
+              style={{marginTop: "1em"}}
             />
+            
           </div>
         </form>
         </div>

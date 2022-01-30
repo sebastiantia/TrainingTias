@@ -1,3 +1,5 @@
+const argon2 = require('argon2')
+
 const router = require('express').Router();
 
 //import mongoose model
@@ -21,10 +23,13 @@ router.route('/').get(async (req, res) => {
 });
 //this end-point handles incoming HTTP POST REQUESTS
 //if it has /add at  the end and is a post request
-router.route('/add').post((req, res) => { 
-    const username = req.body.username; //req.body.username. is assigned to username 
+router.route('/add').post(async (req, res) => { 
+    console.log(req.body);
+    const {username, password} = req.body; //req.body.username. is assigned to username & password
+    console.log(password)
+    const hashedPassword = await argon2.hash(password);
 
-    const newUser = new User({username});//create a new isntance of user with the username
+    const newUser = new User({username, password: hashedPassword});//create a new isntance of user with the username
 
     newUser.save() //saving the new instance to the database
     .then(() => res.json('User added!')) //return User added

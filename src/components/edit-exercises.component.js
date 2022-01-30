@@ -22,6 +22,7 @@ class EditExercises extends Component {
       //state is how you create variables in react, you are never gonna do: let name = 'beau':
       //In React you are always going to create everything in STATE so that React will auto update with new values.
       username: "",
+      password: "",
       description: "",
       duration: 0,
       date: new Date(),
@@ -85,12 +86,19 @@ class EditExercises extends Component {
       date: date,
     });
   }
+
+  onChangePassword(e) {
+    this.setState({
+      password: e.target.password
+    })
+  }
   //handling the submit button
 
   async onSubmit(e) {
     e.preventDefault(); //this will prevent the default HTML form submit behavior
     const exercise = {
       username: this.state.username,
+      password: this.state.password,
       description: this.state.description,
       duration: this.state.duration,
       date: this.state.date,
