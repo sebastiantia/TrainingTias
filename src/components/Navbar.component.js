@@ -1,27 +1,33 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import './Navbar.component.css'
 
 class Navbar extends Component {
   render() {
+
     return (
-      <nav className="navbar navbar-dark bg-dark navbar-expand-lg">
-        <Link to="/" className="navbar-brand">
+      <nav >
+        <a>
+           <Link to="/" className="navbar-brand">
           ExcerTracker
         </Link>
-        <div className="collpase navbar-collapse">
-          <ul className="navbar-nav mr-auto">
-            <li className="navbar-item">
-              <Link to="/" className="nav-link">
+
+        </a>
+       
+        <div>
+          <ul>
+            <li>
+              <Link to="/" style={{textDecoration:"none"}}>
                 Exercises
               </Link>
             </li>
-            <li className="navbar-item">
-              <Link to="/create" className="nav-link">
+            <li >
+              <Link to="/create" >
                 Create Exercise Log
               </Link>
             </li>
-            <li className="navbar-item">
-              <Link to="/user" className="nav-link">
+            <li >
+              <Link to="/user" >
                 Create User
               </Link>
             </li>

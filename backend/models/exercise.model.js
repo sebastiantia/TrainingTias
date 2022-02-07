@@ -8,10 +8,12 @@ const exerciseSchema = new Schema(
     //userSchema only has a single field username
     //but we have some VALIDATIONS to the username
     username: { type: String, required: true },
+    password: { type: String, required: true},
     description: { type: String, required: true },
     duration: { type: Number, required: true },
     date: { type: Date, required: true },
   },
+  // { error: {type:String, required: false}},
   {
     timestamps: true, //automatically creates fields for when it was created and mdified.
   }

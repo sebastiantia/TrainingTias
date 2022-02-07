@@ -9,8 +9,7 @@ import CreateUser from "./components/create-user.component";
 import Navbar from "./components/Navbar.component";
 function App() {
   return (
-    <>
-    <div className="container">
+      <div className="container">
     <Navbar />
       <Routes>
           
@@ -22,7 +21,7 @@ function App() {
       </Routes>
 
     </div>
-    </>
+
   );
 }
 
